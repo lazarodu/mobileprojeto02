@@ -7,11 +7,13 @@ import {
   StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { useNavigationContainerRef } from "@react-navigation/native";
 import { Button, ButtonText } from "../../components";
 import colors from "../../styles/colors";
 
 export default function Login() {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
+  const navigation = useNavigationContainerRef();
   function handleCadastrar() {
     navigation.navigate("Cadastrar");
   }

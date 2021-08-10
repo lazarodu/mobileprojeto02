@@ -10,9 +10,9 @@ export default function ButtonAnimal({
   ...rest
 }: ButtonProps) {
   return (
-    <TouchableOpacity onPress={onPress} {...rest}>
+    <TouchableOpacity style={styles.button} onPress={onPress} {...rest}>
       {image && <Image style={styles.image} source={image} />}
-      <Text>{title}</Text>
+      <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
 }

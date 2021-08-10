@@ -15,6 +15,11 @@ export default function HomeRoute() {
         headerStyle: { backgroundColor: colors.brownLight },
         headerTintColor: colors.white,
         headerTitle: () => <Text style={styles.title}>Animais</Text>,
+        drawerStyle: {
+          backgroundColor: colors.brownLight,
+        },
+        drawerInactiveTintColor: colors.white,
+        drawerActiveTintColor: colors.white,
       }}
     >
       <Drawer.Screen
@@ -23,7 +28,7 @@ export default function HomeRoute() {
         options={{
           drawerLabel: "Animais",
           drawerIcon: () => (
-            <MaterialCommunityIcons name="dog" size={24} color={colors.brown} />
+            <MaterialCommunityIcons name="dog" size={24} color={colors.white} />
           ),
         }}
       />
