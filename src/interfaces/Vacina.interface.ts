@@ -1,7 +1,8 @@
 import { ImageSourcePropType } from "react-native";
+import { AnimalProps } from "./Animal.interface";
 import { ButtonProps } from "./Button.interface"
 
-export interface VacinaParamProps {
+export interface VacinaParamProps extends AnimalProps {
   id: number
   nome: string
   data: string

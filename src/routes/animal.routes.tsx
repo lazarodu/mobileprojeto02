@@ -1,8 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Home, Animal, Castra, Vacina } from "../pages";
+import { AnimalStackParamList } from "../types/ScreenStack.types";
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<AnimalStackParamList>();
 
 export default function AnimalRoute() {
   return (

@@ -1,27 +1,29 @@
 import React, { useState } from "react";
 import { useRoute } from "@react-navigation/core";
-import { useNavigation } from "@react-navigation/core";
+// import { useNavigation } from "@react-navigation/core";
 import { Button, Header } from "../../components";
 import { StyleSheet, SafeAreaView, Text, TextInput } from "react-native";
 import { CastraPropsAnimal } from "../../interfaces/Castra.interface";
 import colors from "../../styles/colors";
+import { AnimalTypes } from "../../types/ScreenStack.types";
+import { AnimalProps } from "../../interfaces/Animal.interface";
 
-export default function Castra() {
+export default function Castra({ navigation }: AnimalTypes) {
   const route = useRoute();
-  const { title, image, data } = route.params as CastraPropsAnimal;
-  console.log({ title, image, data });
-  const [dataCastra, setDataCastra] = useState(data);
+  const data = route.params as AnimalProps;
+  console.log({ ...data });
+  const [dataCastra, setDataCastra] = useState(data.castracao);
   function dataChange(item: string) {
     setDataCastra(item);
   }
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   function handleAnimal() {
-    navigation.navigate("Animal");
+    navigation.navigate("Animal", { ...data });
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header name={title} image={image} />
+      <Header name={data.title} image={data.image} />
       <Text style={styles.text}>Castração</Text>
       <TextInput
         style={styles.input}

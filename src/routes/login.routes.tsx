@@ -2,8 +2,9 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Login, Cadastrar } from "../pages";
 import HomeStack from "./home.routes";
+import { LoginStackParamList } from "../types/ScreenStack.types";
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<LoginStackParamList>();
 
 export default function LoginRoute() {
   return (

@@ -29,4 +29,18 @@ export default [
       data: "06/11/2020"
     }]
   },
+  {
+    id: 2,
+    title: "Tempurá",
+    image: require("../../assets/img/tempura.png"),
+    vacinacao: [{
+      id: 1,
+      nome: "Raiva",
+      data: "10/02/2021"
+    }, {
+      id: 2,
+      nome: "V10",
+      data: "07/05/2020"
+    }]
+  },
 ]

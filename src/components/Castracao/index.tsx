@@ -37,18 +37,20 @@ export default function Castracao({
   return (
     <View style={styles.container}>
       <Text style={styles.header}>{title}</Text>
-      <View style={styles.list}>
-        <Text style={styles.text}>{data}</Text>
-        <View style={styles.button}>
-          <ButtonAction type="edit" onPress={buttonEdit} {...rest}>
-            <FontAwesome name="edit" color={colors.white} />
-          </ButtonAction>
-          <ButtonAction type="remove" onPress={castraRemoveAlert} {...rest}>
-            <FontAwesome name="remove" color={colors.white} />
-          </ButtonAction>
+      {data && (
+        <View style={styles.list}>
+          <Text style={styles.text}>{data}</Text>
+          <View style={styles.button}>
+            <ButtonAction type="edit" onPress={buttonEdit} {...rest}>
+              <FontAwesome name="edit" color={colors.white} />
+            </ButtonAction>
+            <ButtonAction type="remove" onPress={castraRemoveAlert} {...rest}>
+              <FontAwesome name="remove" color={colors.white} />
+            </ButtonAction>
+          </View>
         </View>
-      </View>
-      <Button size="define" title="Cadastrar" onPress={onPress} />
+      )}
+      {!data && <Button size="define" title="Cadastrar" onPress={onPress} />}
     </View>
   );
 }

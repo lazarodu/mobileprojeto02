@@ -6,11 +6,12 @@ import {
   TextInput,
   StyleSheet,
 } from "react-native";
-import { useNavigation } from "@react-navigation/core";
+// import { useNavigation } from "@react-navigation/core";
 import { Button, ButtonText } from "../../components";
+import { LoginTypes } from "../../types/ScreenStack.types";
 
-export default function Cadastrar() {
-  const navigation = useNavigation();
+export default function Cadastrar({ navigation }: LoginTypes) {
+  // const navigation = useNavigation();
   function handleLogin() {
     navigation.navigate("Login");
   }

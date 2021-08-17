@@ -1,33 +1,33 @@
 import React from "react";
 import { useRoute } from "@react-navigation/core";
-import { useNavigation } from "@react-navigation/core";
+// import { useNavigation } from "@react-navigation/core";
 import { SafeAreaView } from "react-native";
 import { Header, Castracao, Vacinacao, ButtonText } from "../../components";
 import { AnimalProps } from "../../interfaces/Animal.interface";
 import { VacinaParamProps } from "../../interfaces/Vacina.interface";
+import { AnimalTypes } from "../../types/ScreenStack.types";
 
-export default function Animal() {
+export default function Animal({ navigation }: AnimalTypes) {
   const route = useRoute();
-  const { title, image, castracao, vacinacao, id } =
-    route.params as AnimalProps;
-  const navigation = useNavigation();
+  const data = route.params as AnimalProps;
+  // const navigation = useNavigation();
   function handleCastraAnimal() {
-    navigation.navigate("Castra", { title, image });
+    navigation.navigate("Castra", { ...data });
   }
   function handleVacinaAnimal() {
-    navigation.navigate("Vacina", { title, image });
+    navigation.navigate("Vacina", { ...data });
   }
   function castraEdit() {
-    navigation.navigate("Castra", { title, image, data: castracao });
+    navigation.navigate("Castra", { ...data });
   }
   function vacinaEdit(item: VacinaParamProps) {
-    navigation.navigate("Vacina", { title, image, ...item });
+    navigation.navigate("Vacina", { ...data, ...item });
   }
   function castraRemove() {
-    console.log("Castra", { title, image, data: castracao });
+    console.log("Castra", { ...data });
   }
   function vacinaRemove(item: VacinaParamProps) {
-    console.log("Vacina", { title, image, ...item });
+    console.log("Vacina", { ...data, ...item });
   }
   function voltar() {
     navigation.navigate("Home");
@@ -35,20 +35,20 @@ export default function Animal() {
 
   return (
     <SafeAreaView>
-      <Header name={title} image={image} />
+      <Header name={data.title} image={data.image} />
       <Castracao
         title="Castração"
         onPress={handleCastraAnimal}
         buttonEdit={castraEdit}
         buttonRemove={castraRemove}
-        data={castracao}
+        data={data.castracao}
       />
       <Vacinacao
         title="Vacinação"
         onPress={handleVacinaAnimal}
         buttonEdit={vacinaEdit}
         buttonRemove={vacinaRemove}
-        vacinacao={vacinacao}
+        vacinacao={data.vacinacao}
       />
       <ButtonText title="Voltar" onPress={voltar} />
     </SafeAreaView>

@@ -6,14 +6,15 @@ import {
   TextInput,
   StyleSheet,
 } from "react-native";
-import { useNavigation } from "@react-navigation/core";
-import { useNavigationContainerRef } from "@react-navigation/native";
+// import { useNavigation } from "@react-navigation/core";
+// import { useNavigationContainerRef } from "@react-navigation/native";
 import { Button, ButtonText } from "../../components";
 import colors from "../../styles/colors";
+import { LoginTypes } from "../../types/ScreenStack.types";
 
-export default function Login() {
+export default function Login({ navigation }: LoginTypes) {
   // const navigation = useNavigation();
-  const navigation = useNavigationContainerRef();
+  // const navigation = useNavigationContainerRef();
   function handleCadastrar() {
     navigation.navigate("Cadastrar");
   }

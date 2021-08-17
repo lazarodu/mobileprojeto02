@@ -1,12 +1,13 @@
 import React from "react";
 import { FlatList, StyleSheet, SafeAreaView, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/core";
+// import { useNavigation } from "@react-navigation/core";
 import { Header, ButtonAnimal } from "../../components";
 import data from "../../services/data";
 import { AnimalProps } from "../../interfaces/Animal.interface";
+import { AnimalTypes } from "../../types/ScreenStack.types";
 
-export default function Home() {
-  const navigation = useNavigation();
+export default function Home({ navigation }: AnimalTypes) {
+  // const navigation = useNavigation();
   function handleAnimal(item: AnimalProps) {
     navigation.navigate("Animal", { ...item });
   }

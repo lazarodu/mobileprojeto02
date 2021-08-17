@@ -5,7 +5,7 @@ export interface AnimalProps {
   id: number
   title: string
   image: ImageSourcePropType
-  castracao: string
+  castracao?: string
   vacinacao: {
     id: number
     nome: string

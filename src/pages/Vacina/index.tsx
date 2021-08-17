@@ -1,31 +1,35 @@
 import React, { useState } from "react";
 import { useRoute } from "@react-navigation/core";
-import { useNavigation } from "@react-navigation/core";
+// import { useNavigation } from "@react-navigation/core";
 import { Button, Header } from "../../components";
 import { StyleSheet, SafeAreaView, Text, TextInput } from "react-native";
-import { VacinaPropsAnimal } from "../../interfaces/Vacina.interface";
+import {
+  VacinaParamProps,
+  VacinaPropsAnimal,
+} from "../../interfaces/Vacina.interface";
 import colors from "../../styles/colors";
+import { AnimalTypes } from "../../types/ScreenStack.types";
 
-export default function Vacina() {
+export default function Vacina({ navigation }: AnimalTypes) {
   const route = useRoute();
-  const { title, image, nome, data } = route.params as VacinaPropsAnimal;
-  console.log({ title, image, nome, data });
-  const [nomeVacina, setNomeVacina] = useState(nome);
-  const [dataVacina, setDataVacina] = useState(data);
+  const data = route.params as VacinaParamProps;
+  console.log({ ...data });
+  const [nomeVacina, setNomeVacina] = useState(data.nome);
+  const [dataVacina, setDataVacina] = useState(data.data);
   function nomeChange(item: string) {
     setNomeVacina(item);
   }
   function dataChange(item: string) {
     setDataVacina(item);
   }
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   function handleAnimal() {
-    navigation.navigate("Animal");
+    navigation.navigate("Animal", { ...data });
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header name={title} image={image} />
+      <Header name={data.title} image={data.image} />
       <Text style={styles.text}>Vacinação</Text>
       <TextInput
         style={styles.input}
