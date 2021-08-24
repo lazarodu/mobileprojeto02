@@ -4,7 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import AnimalStack from "./animal.routes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../styles/colors";
-import { Camera } from "../pages";
+import { Camera, Map } from "../pages";
 
 const Drawer = createDrawerNavigator();
 
@@ -34,6 +34,7 @@ export default function HomeRoute() {
         }}
       />
       <Drawer.Screen name="Camera" component={Camera} />
+      <Drawer.Screen name="Map" component={Map} />
     </Drawer.Navigator>
   );
 }
