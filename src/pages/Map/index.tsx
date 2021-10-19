@@ -19,33 +19,35 @@ export default function App() {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      // -21.5492778,-45.4214182
-      setRegion({
-        // latitude: location.coords.latitude,
-        // longitude: location.coords.longitude,
-        // latitude: -21.5492778,
-        // longitude: -45.4214182,
-        latitude: -21.5631541,
-        longitude: -45.4386853,
-        latitudeDelta: 0.05,
-        longitudeDelta: 0.05,
-      });
-      setMarker([
-        {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
+      let location = await Location.getLastKnownPositionAsync();
+      if (location) {
+        setLocation(location);
+        // -21.5492778,-45.4214182
+        setRegion({
+          // latitude: location.coords.latitude,
+          // longitude: location.coords.longitude,
+          // latitude: -21.5492778,
+          // longitude: -45.4214182,
+          latitude: -21.5631541,
+          longitude: -45.4386853,
           latitudeDelta: 0.05,
           longitudeDelta: 0.05,
-        },
-        {
-          latitude: -21.5492778,
-          longitude: -45.4214182,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
-        },
-      ]);
+        });
+        setMarker([
+          {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          },
+          {
+            latitude: -21.5492778,
+            longitude: -45.4214182,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          },
+        ]);
+      }
     };
     handleLocation();
   }, []);
@@ -62,7 +64,10 @@ export default function App() {
       {!region && <Text style={styles.paragraph}>{text}</Text>}
       {region && (
         <MapView style={styles.map} region={region}>
-          {marker && marker.map((item) => <Marker coordinate={item} />)}
+          {marker &&
+            marker.map((item) => (
+              <Marker key={item.latitude} coordinate={item} />
+            ))}
         </MapView>
       )}
     </View>

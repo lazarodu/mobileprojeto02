@@ -49,7 +49,7 @@ export default function App() {
             Alert.alert("Erro ao salvar a imagem!");
           });
       } catch (error) {
-        Alert.alert(error);
+        Alert.alert(String(error));
       }
     } else {
       Alert.alert("Sem permissão para acessar os arquivos");

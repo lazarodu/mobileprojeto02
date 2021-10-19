@@ -1,8 +1,14 @@
 import React from "react";
 import { useRoute } from "@react-navigation/core";
 // import { useNavigation } from "@react-navigation/core";
-import { SafeAreaView } from "react-native";
-import { Header, Castracao, Vacinacao, ButtonText } from "../../components";
+import { SafeAreaView, Image, StyleSheet } from "react-native";
+import {
+  Header,
+  Castracao,
+  Vacinacao,
+  ButtonText,
+  ButtonAula,
+} from "../../components";
 import { AnimalProps } from "../../interfaces/Animal.interface";
 import { VacinaParamProps } from "../../interfaces/Vacina.interface";
 import { AnimalTypes } from "../../types/ScreenStack.types";
@@ -50,7 +56,18 @@ export default function Animal({ navigation }: AnimalTypes) {
         buttonRemove={vacinaRemove}
         vacinacao={data.vacinacao}
       />
-      <ButtonText title="Voltar" onPress={voltar} />
+      <ButtonAula onPress={voltar}>
+        <Image
+          source={require("../../../assets/img/cao.png")}
+          style={styles.image}
+        />
+      </ButtonAula>
     </SafeAreaView>
   );
 }
+const styles = StyleSheet.create({
+  image: {
+    width: "10%",
+    height: "10%",
+  },
+});
