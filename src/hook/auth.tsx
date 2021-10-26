@@ -8,24 +8,23 @@ const AuthContext = createContext<IAuthContextData>({} as IAuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const [auth, setAuth] = useState<IAuthState>();
-  const signIn = useCallback(
-    async ({ email, password }) => {
-      const response = await apiUser.login({
-        email,
-        password,
-      });
-      const { access_token } = response.data;
-      setAuth({ access_token });
+  const signIn = useCallback(async ({ email, password }) => {
+    const response = await apiUser.login({
+      email,
+      password,
+    });
+    const { access_token, user } = response.data.data;
+    setAuth({ access_token, user });
 
-      await AsyncStorage.setItem("access_token", access_token);
+    await AsyncStorage.setItem("access_token", access_token);
+    await AsyncStorage.setItem("user", JSON.stringify(user));
 
-      api.defaults.headers.common.authorization = `bearer ${access_token}`;
-    },
-    [history]
-  );
+    api.defaults.headers.common.authorization = `bearer ${access_token}`;
+  }, []);
 
   const removeLocalStorage = async () => {
     await AsyncStorage.removeItem("access_token");
+    await AsyncStorage.removeItem("user");
   };
 
   const signOut = useCallback(() => {
@@ -40,6 +39,7 @@ const AuthProvider: React.FC = ({ children }) => {
         signIn,
         signOut,
         access_token: auth?.access_token,
+        user: auth?.user,
       }}
     >
       {children}

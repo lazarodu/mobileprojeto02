@@ -10,7 +10,7 @@ export default function Header({ hello, name, image }: HeaderProps) {
         <Text style={styles.name}>{name}</Text>
       </View>
       <View style={styles.image}>
-        <Image source={image} />
+        <Image source={image} style={styles.img} />
       </View>
     </View>
   );
@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
   image: {
     width: "50%",
     alignItems: "center",
+  },
+  img: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
   },
   hello: {
     fontSize: 18,
