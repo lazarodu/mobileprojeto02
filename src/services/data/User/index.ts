@@ -3,10 +3,13 @@ import { IRegister, IAuthenticate, IUser } from "../../../interfaces/User.interf
 
 class UserData {
   register(data: IRegister) {
-    return api.post<IRegister>('/register', data);
+    return api.post<IUser>('/register', data);
   }
   login(data: IAuthenticate) {
     return api.post<IUser>('/login', data);
+  }
+  logout() {
+    return api.get('/logout')
   }
 }
 

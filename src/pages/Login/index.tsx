@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { AxiosError } from "axios";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,15 +8,16 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import { Button, ButtonText } from "../../components";
+import { Button, ButtonText, Loading } from "../../components";
 import { useAuth } from "../../hook/auth";
-import { IAuthenticate } from "../../interfaces/User.interface";
+import { IAuthenticate, IUser } from "../../interfaces/User.interface";
 import colors from "../../styles/colors";
 import { LoginTypes } from "../../types/ScreenStack.types";
 
 export default function Login({ navigation }: LoginTypes) {
   const { signIn } = useAuth();
   const [data, setData] = useState<IAuthenticate>();
+  const [isLoading, setIsLoading] = useState(true);
 
   function handleCadastrar() {
     navigation.navigate("Cadastrar");
@@ -28,41 +30,66 @@ export default function Login({ navigation }: LoginTypes) {
   }
   async function handleSignIn() {
     try {
+      setIsLoading(true);
       if (data?.email && data.password) {
         await signIn(data);
       } else {
         Alert.alert("Preencha todos os campos!!!");
       }
     } catch (error) {
-      Alert.alert(`Erro ao fazer o login: ${error}`);
+      const err = error as AxiosError;
+      const data = err.response?.data as IUser;
+      let message = "";
+      if (data.data) {
+        for (const [key, value] of Object.entries(data.data)) {
+          message = `${message} ${value}`;
+        }
+      }
+      Alert.alert(`${data.message} ${message}`);
+    } finally {
+      setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <KeyboardAvoidingView>
-        <Text style={styles.title}>Adopted</Text>
-        <View style={styles.formRow}>
-          <Text style={styles.label}>E-mail</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="e-mail"
-            keyboardType="email-address"
-            onChangeText={(i) => handleChange({ email: i })}
-          ></TextInput>
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <View style={styles.container}>
+          <KeyboardAvoidingView>
+            <Text style={styles.title}>Adopted</Text>
+            <View style={styles.formRow}>
+              <Text style={styles.label}>E-mail</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="e-mail"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                onChangeText={(i) => handleChange({ email: i })}
+              ></TextInput>
+            </View>
+            <View style={styles.formRow}>
+              <Text style={styles.label}>Senha</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="senha"
+                secureTextEntry={true}
+                onChangeText={(i) => handleChange({ password: i })}
+              ></TextInput>
+            </View>
+            <Button title="Login" onPress={handleSignIn} />
+            <ButtonText title="Cadastre-se" onPress={handleCadastrar} />
+          </KeyboardAvoidingView>
         </View>
-        <View style={styles.formRow}>
-          <Text style={styles.label}>Senha</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="senha"
-            secureTextEntry={true}
-            onChangeText={(i) => handleChange({ password: i })}
-          ></TextInput>
-        </View>
-        <Button title="Login" onPress={handleSignIn} />
-        <ButtonText title="Cadastre-se" onPress={handleCadastrar} />
-      </KeyboardAvoidingView>
-    </View>
+      )}
+    </>
   );
 }
 

@@ -34,6 +34,7 @@ export interface IAuthState {
 }
 
 export interface IAuthContextData {
+  register(credentials: IRegister): Promise<void>;
   signIn(credentials: IAuthenticate): Promise<void>;
   signOut(): void;
   access_token?: string;

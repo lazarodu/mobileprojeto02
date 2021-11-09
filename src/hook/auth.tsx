@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useCallback, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useState,
+  useEffect,
+} from "react";
 import { apiUser } from "../services/data/index";
 import api from "../services/api";
 import { IAuthState, IAuthContextData } from "../interfaces/User.interface";
@@ -7,9 +13,25 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const AuthContext = createContext<IAuthContextData>({} as IAuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [auth, setAuth] = useState<IAuthState>();
+  const [auth, setAuth] = useState<IAuthState>({} as IAuthState);
+
   const signIn = useCallback(async ({ email, password }) => {
     const response = await apiUser.login({
+      email,
+      password,
+    });
+    const { access_token, user } = response.data.data;
+    setAuth({ access_token, user });
+
+    await AsyncStorage.setItem("access_token", access_token);
+    await AsyncStorage.setItem("user", JSON.stringify(user));
+
+    api.defaults.headers.common.authorization = `bearer ${access_token}`;
+  }, []);
+
+  const register = useCallback(async ({ name, email, password }) => {
+    const response = await apiUser.register({
+      name,
       email,
       password,
     });
@@ -33,11 +55,26 @@ const AuthProvider: React.FC = ({ children }) => {
     delete api.defaults.headers.common.authorization;
   }, []);
 
+  const loadUserStorageData = useCallback(async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const user = await AsyncStorage.getItem("user");
+
+    if (access_token && user) {
+      setAuth({ access_token, user: JSON.parse(user) });
+      api.defaults.headers.common.authorization = `bearer ${access_token}`;
+    }
+  }, []);
+
+  useEffect(() => {
+    loadUserStorageData();
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
         signIn,
         signOut,
+        register,
         access_token: auth?.access_token,
         user: auth?.user,
       }}
