@@ -49,10 +49,11 @@ const AuthProvider: React.FC = ({ children }) => {
     await AsyncStorage.removeItem("user");
   };
 
-  const signOut = useCallback(() => {
+  const signOut = useCallback(async () => {
     setAuth({} as IAuthState);
     removeLocalStorage();
     delete api.defaults.headers.common.authorization;
+    await apiUser.logout();
   }, []);
 
   const loadUserStorageData = useCallback(async () => {
