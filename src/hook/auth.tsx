@@ -21,12 +21,11 @@ const AuthProvider: React.FC = ({ children }) => {
       password,
     });
     const { access_token, user } = response.data.data;
+    api.defaults.headers.common.Authorization = `Bearer ${access_token}`;
     setAuth({ access_token, user });
 
     await AsyncStorage.setItem("access_token", access_token);
     await AsyncStorage.setItem("user", JSON.stringify(user));
-
-    api.defaults.headers.common.authorization = `bearer ${access_token}`;
   }, []);
 
   const register = useCallback(async ({ name, email, password }) => {
@@ -36,12 +35,11 @@ const AuthProvider: React.FC = ({ children }) => {
       password,
     });
     const { access_token, user } = response.data.data;
+    api.defaults.headers.common.Authorization = `Bearer ${access_token}`;
     setAuth({ access_token, user });
 
     await AsyncStorage.setItem("access_token", access_token);
     await AsyncStorage.setItem("user", JSON.stringify(user));
-
-    api.defaults.headers.common.authorization = `bearer ${access_token}`;
   }, []);
 
   const removeLocalStorage = async () => {
@@ -61,8 +59,8 @@ const AuthProvider: React.FC = ({ children }) => {
     const user = await AsyncStorage.getItem("user");
 
     if (access_token && user) {
+      api.defaults.headers.common.Authorization = `Bearer ${access_token}`;
       setAuth({ access_token, user: JSON.parse(user) });
-      api.defaults.headers.common.authorization = `bearer ${access_token}`;
     }
   }, []);
 

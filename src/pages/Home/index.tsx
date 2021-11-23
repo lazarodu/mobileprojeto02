@@ -30,7 +30,6 @@ export default function Home({ navigation }: AnimalTypes) {
     const fetchData = async () => {
       try {
         const response = await apiAnimal.index();
-        console.log(response.data.data);
         setData(response.data.data);
       } catch (error) {
         const err = error as AxiosError;
@@ -58,7 +57,7 @@ export default function Home({ navigation }: AnimalTypes) {
             <Header
               hello="Olá"
               name={user?.name}
-              image={{ uri: user.profile_photo_url }}
+              image={user.profile_photo_url}
             />
           )}
           {data && (

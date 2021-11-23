@@ -3,7 +3,6 @@ import { Image, View, Text, StyleSheet } from "react-native";
 import { HeaderProps } from "../../interfaces/Header.interface";
 
 export default function Header({ hello, name, image }: HeaderProps) {
-  console.log(image);
   return (
     <View style={styles.header}>
       <View style={styles.title}>
@@ -11,7 +10,7 @@ export default function Header({ hello, name, image }: HeaderProps) {
         <Text style={styles.name}>{name}</Text>
       </View>
       <View style={styles.image}>
-        <Image source={image} style={styles.img} />
+        <Image source={{ uri: image }} style={styles.img} />
       </View>
     </View>
   );

@@ -41,7 +41,7 @@ export default function Animal({ navigation }: AnimalTypes) {
 
   return (
     <SafeAreaView>
-      <Header name={data.title} image={data.image} />
+      <Header name={data.nome} image={data.imagem} />
       <Castracao
         title="Castração"
         onPress={handleCastraAnimal}
@@ -56,12 +56,13 @@ export default function Animal({ navigation }: AnimalTypes) {
         buttonRemove={vacinaRemove}
         vacinacao={data.vacinacao}
       />
-      <ButtonAula onPress={voltar}>
+      <ButtonText onPress={voltar} title="Voltar" />
+      {/* <ButtonAula onPress={voltar}>
         <Image
           source={require("../../../assets/img/cao.png")}
           style={styles.image}
         />
-      </ButtonAula>
+      </ButtonAula> */}
     </SafeAreaView>
   );
 }

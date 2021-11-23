@@ -35,6 +35,7 @@ export default function Login({ navigation }: LoginTypes) {
         await signIn(data);
       } else {
         Alert.alert("Preencha todos os campos!!!");
+        setIsLoading(false);
       }
     } catch (error) {
       const err = error as AxiosError;
@@ -46,15 +47,12 @@ export default function Login({ navigation }: LoginTypes) {
         }
       }
       Alert.alert(`${data.message} ${message}`);
-    } finally {
       setIsLoading(false);
     }
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+    setIsLoading(false);
   }, []);
 
   return (

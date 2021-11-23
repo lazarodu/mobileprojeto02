@@ -18,14 +18,14 @@ export type AnimalStackParamList = {
   Home: undefined
   Animal: AnimalProps
   Castra: {
-    title: string
-    image: ImageSourcePropType
+    nome: string
+    imagem: string
     castracao?: string
     data?: string
   }
   Vacina: {
-    title: string
-    image: ImageSourcePropType
+    nome: string
+    imagem: string
     castracao?: string
     vacinacao?: {
       nome: string
