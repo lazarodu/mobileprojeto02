@@ -47,9 +47,7 @@ export default function Cadastrar({ navigation }: LoginTypes) {
   }
 
   useEffect(() => {
-    // setTimeout(() => {
     setIsLoading(false);
-    // }, 500);
   }, []);
 
   return (

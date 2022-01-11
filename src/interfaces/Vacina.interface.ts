@@ -8,10 +8,16 @@ export interface VacinaParamProps extends AnimalProps {
   data: string
 }
 
+export interface IVacinaParam {
+  id: number
+  nome: string
+  data: string
+}
+
 export interface VacinaProps extends ButtonProps {
-  buttonEdit: (item: VacinaParamProps) => void
-  buttonRemove: (item: VacinaParamProps) => void
-  vacinacao: {
+  buttonEdit: (item: IVacinaParam) => void
+  buttonRemove: (item: IVacinaParam) => void
+  vacinacao?: {
     id: number
     nome: string
     data: string

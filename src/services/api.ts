@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://laravelmodelo.herokuapp.com/api",
+  baseURL: "https://laravelwe22021.herokuapp.com/api",
   headers: {
     'Content-Type': 'application/json',
   }

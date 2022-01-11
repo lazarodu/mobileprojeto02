@@ -47,6 +47,7 @@ export default function Home({ navigation }: AnimalTypes) {
     };
     fetchData();
   }, []);
+
   return (
     <>
       {isLoading ? (

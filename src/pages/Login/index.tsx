@@ -22,9 +22,6 @@ export default function Login({ navigation }: LoginTypes) {
   function handleCadastrar() {
     navigation.navigate("Cadastrar");
   }
-  // function handleHome() {
-  //   navigation.navigate("HomeStack");
-  // }
   function handleChange(item: IAuthenticate) {
     setData({ ...data, ...item });
   }

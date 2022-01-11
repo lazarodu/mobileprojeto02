@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import {
+  IVacinaParam,
   VacinaParamProps,
   VacinaProps,
 } from "../../interfaces/Vacina.interface";
@@ -18,7 +19,7 @@ export default function Vacinacao({
   onPress,
   ...rest
 }: VacinaProps) {
-  const vacinaRemoveAlert = (item: VacinaParamProps) =>
+  const vacinaRemoveAlert = (item: IVacinaParam) =>
     Alert.alert(
       "Remoção",
       "Tem certeza que deseja remover a vacina cadastrada?",
@@ -48,14 +49,14 @@ export default function Vacinacao({
             <View style={styles.button}>
               <ButtonAction
                 type="edit"
-                onPress={() => buttonEdit(item)}
+                onPress={() => buttonEdit({ ...item })}
                 {...rest}
               >
                 <FontAwesome name="edit" color={colors.white} />
               </ButtonAction>
               <ButtonAction
                 type="remove"
-                onPress={() => vacinaRemoveAlert(item)}
+                onPress={() => vacinaRemoveAlert({ ...item })}
                 {...rest}
               >
                 <FontAwesome name="remove" color={colors.white} />
