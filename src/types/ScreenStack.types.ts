@@ -16,7 +16,7 @@ export type LoginTypes = {
 // Animal Stack
 export type AnimalStackParamList = {
   Home: undefined
-  Animal: AnimalProps
+  Animal: { id: number }
   Castra: {
     nome?: string
     imagem?: string
@@ -31,7 +31,7 @@ export type AnimalStackParamList = {
     vacinacao?: {
       nome: string
       data: string
-    }[]
+    }
   }
 }
 type AnimalScreenNavigationProp = StackNavigationProp<AnimalStackParamList>

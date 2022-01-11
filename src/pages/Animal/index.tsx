@@ -7,7 +7,7 @@ import {
   Castracao,
   Vacinacao,
   ButtonText,
-  ButtonAula,
+  Loading,
 } from "../../components";
 import {
   AnimalProps,
@@ -20,24 +20,35 @@ import {
 import { AnimalTypes } from "../../types/ScreenStack.types";
 import { AxiosError } from "axios";
 import { IResponse } from "../../interfaces/Response.interface";
-import { apiAnimal } from "../../services/data";
+import { apiAnimal, apiVacina } from "../../services/data";
+import api from "../../services/api";
 
 export default function Animal({ navigation }: AnimalTypes) {
   const route = useRoute();
   const { id } = route.params as AnimalProps;
   const [data, setData] = useState<IInterfaceAnimal>();
+  const [isLoading, setIsLoading] = useState(true);
   // const navigation = useNavigation();
   function handleCastraAnimal() {
     navigation.navigate("Castra", { ...data });
   }
   function handleVacinaAnimal() {
-    navigation.navigate("Vacina", { ...data });
+    navigation.navigate("Vacina", {
+      id: data?.id,
+      nome: data?.nome,
+      imagem: data?.imagem,
+    });
   }
   function castraEdit() {
     navigation.navigate("Castra", { ...data });
   }
   function vacinaEdit(item: IVacinaParam) {
-    navigation.navigate("Vacina", { ...data, ...item });
+    navigation.navigate("Vacina", {
+      id: data?.id,
+      nome: data?.nome,
+      imagem: data?.imagem,
+      vacinacao: { ...item },
+    });
   }
   async function castraRemove() {
     console.log("Castra", { ...data });
@@ -57,12 +68,6 @@ export default function Animal({ navigation }: AnimalTypes) {
       }
       Alert.alert(`${data.message} ${message}`);
     }
-  }
-  async function vacinaRemove(item: IVacinaParam) {
-    console.log("Vacina", { ...data, ...item });
-  }
-  function voltar() {
-    navigation.navigate("Home");
   }
   const fetchData = useCallback(async () => {
     try {
@@ -99,36 +104,58 @@ export default function Animal({ navigation }: AnimalTypes) {
         }
       }
       Alert.alert(`${data.message} ${message}`);
+    } finally {
+      setIsLoading(false);
     }
   }, []);
+
+  async function vacinaRemove(item: IVacinaParam) {
+    try {
+      setIsLoading(true);
+      await apiVacina.destroy(item.id);
+      await fetchData();
+    } catch (error) {
+      const err = error as AxiosError;
+      console.log(err.response?.data);
+    }
+  }
+  function voltar() {
+    navigation.navigate("Home");
+  }
 
   useEffect(() => {
     navigation.addListener("focus", () => fetchData());
   }, []);
 
   return (
-    <SafeAreaView>
-      {data && (
-        <>
-          <Header name={data.nome} image={data.imagem} />
-          <Castracao
-            title="Castração"
-            onPress={handleCastraAnimal}
-            buttonEdit={castraEdit}
-            buttonRemove={castraRemove}
-            data={data.castracao}
-          />
-          <Vacinacao
-            title="Vacinação"
-            onPress={handleVacinaAnimal}
-            buttonEdit={vacinaEdit}
-            buttonRemove={vacinaRemove}
-            vacinacao={data.vacinacao}
-          />
-          <ButtonText onPress={voltar} title="Voltar" />
-        </>
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <SafeAreaView>
+          {data && (
+            <>
+              <Header name={data.nome} image={data.imagem} />
+              <Castracao
+                title="Castração"
+                onPress={handleCastraAnimal}
+                buttonEdit={castraEdit}
+                buttonRemove={castraRemove}
+                data={data.castracao}
+              />
+              <Vacinacao
+                title="Vacinação"
+                onPress={handleVacinaAnimal}
+                buttonEdit={vacinaEdit}
+                buttonRemove={vacinaRemove}
+                vacinacao={data.vacinacao}
+              />
+              <ButtonText onPress={voltar} title="Voltar" />
+            </>
+          )}
+        </SafeAreaView>
       )}
-    </SafeAreaView>
+    </>
   );
 }
 const styles = StyleSheet.create({

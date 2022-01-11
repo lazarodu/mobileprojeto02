@@ -3,15 +3,24 @@ import { AnimalProps } from "./Animal.interface";
 import { ButtonProps } from "./Button.interface"
 
 export interface VacinaParamProps extends AnimalProps {
-  id: number
-  nome: string
-  data: string
+  vacinacao: {
+    id: number
+    nome: string
+    data: string
+  }
 }
 
 export interface IVacinaParam {
   id: number
   nome: string
   data: string
+}
+
+export interface VacinaParam {
+  id?: number
+  animal_id?: number
+  nome?: string
+  data?: string
 }
 
 export interface VacinaProps extends ButtonProps {

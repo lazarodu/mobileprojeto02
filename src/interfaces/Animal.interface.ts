@@ -6,11 +6,6 @@ export interface AnimalProps {
   nome: string
   imagem: string
   castracao?: string
-  vacinacao: {
-    id: number
-    nome: string
-    data: string
-  }[]
 }
 
 export interface IAnimal {
