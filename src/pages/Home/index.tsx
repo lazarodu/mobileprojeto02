@@ -6,6 +6,7 @@ import {
   Text,
   View,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import { Header, ButtonAnimal, Loading } from "../../components";
 import {
@@ -17,6 +18,7 @@ import { AnimalTypes } from "../../types/ScreenStack.types";
 import { useAuth } from "../../hook/auth";
 import apiAnimal from "../../services/data/Animal";
 import { AxiosError } from "axios";
+import colors from "../../styles/colors";
 
 export default function Home({ navigation }: AnimalTypes) {
   const { user } = useAuth();
@@ -24,6 +26,13 @@ export default function Home({ navigation }: AnimalTypes) {
   const [data, setData] = useState<IInterfaceAnimal[]>();
   function handleAnimal(item: AnimalProps) {
     navigation.navigate("Animal", { ...item });
+  }
+
+  function cadastraAnimal() {
+    navigation.navigate("CadastraAnimal", {
+      nome: user?.name,
+      imagem: user?.profile_photo_url,
+    });
   }
 
   useEffect(() => {
@@ -80,6 +89,9 @@ export default function Home({ navigation }: AnimalTypes) {
                   numColumns={2}
                 />
               </View>
+              <TouchableOpacity style={styles.button} onPress={cadastraAnimal}>
+                <Text style={styles.text}>+</Text>
+              </TouchableOpacity>
             </>
           )}
         </SafeAreaView>
@@ -98,5 +110,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 20,
     marginLeft: 20,
+  },
+  button: {
+    position: "absolute",
+    bottom: 1,
+    right: 10,
+    backgroundColor: colors.brown,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    color: colors.white,
+    fontWeight: "bold",
+    fontSize: 40,
   },
 });

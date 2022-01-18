@@ -33,6 +33,10 @@ export type AnimalStackParamList = {
       data: string
     }
   }
+  CadastraAnimal: {
+    nome?: string
+    imagem?: string
+  }
 }
 type AnimalScreenNavigationProp = StackNavigationProp<AnimalStackParamList>
 export type AnimalTypes = {

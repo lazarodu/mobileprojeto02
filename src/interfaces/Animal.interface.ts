@@ -51,3 +51,12 @@ export interface IInterfaceAnimal {
     data: string
   }[]
 }
+
+export interface ICadastraAnimalParam {
+  nome?: string
+  nascimento?: string
+  imagem?: {
+    uri?: string
+    base64?: string
+  }
+}
