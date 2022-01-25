@@ -57,6 +57,7 @@ export interface ICadastraAnimalParam {
   nascimento?: string
   imagem?: {
     uri?: string
-    base64?: string
+    base64?: string | any
   }
+  file?: string
 }

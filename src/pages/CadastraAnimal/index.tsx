@@ -21,6 +21,7 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
+import { apiAnimal } from "../../services/data";
 
 export default function CadastraAnimal({ navigation }: AnimalTypes) {
   const route = useRoute();
@@ -36,7 +37,7 @@ export default function CadastraAnimal({ navigation }: AnimalTypes) {
   }
   const takePicture = async () => {
     if (!camera) return;
-    const options = { quality: 1, base64: true };
+    const options = { quality: 0.5, base64: true };
     const photo = await camera.takePictureAsync(options);
     setCadastra({ ...cadastra, imagem: photo });
     setStartOver(true);
@@ -47,7 +48,7 @@ export default function CadastraAnimal({ navigation }: AnimalTypes) {
       allowsEditing: true,
       base64: true,
       aspect: [3, 3],
-      quality: 1,
+      quality: 0.5,
     });
 
     if (!result.cancelled) {
@@ -59,7 +60,19 @@ export default function CadastraAnimal({ navigation }: AnimalTypes) {
       setIsLoading(true);
       if (cadastra?.nome && cadastra.nascimento && cadastra.imagem) {
         const dataEnvia = cadastra.nascimento.split("/");
-        console.log(cadastra);
+        const imageName = cadastra.imagem.uri?.split("/").pop();
+        const formData = new FormData();
+        formData.append("imagem", cadastra.imagem.base64);
+        if (imageName) {
+          formData.append("file", imageName);
+        }
+        formData.append("nome", cadastra.nome);
+        formData.append(
+          "nascimento",
+          `${dataEnvia[2]}-${dataEnvia[1]}-${dataEnvia[0]}`
+        );
+        const response = await apiAnimal.store(formData);
+        navigation.navigate("Home");
       } else {
         Alert.alert("Preencha todos os campos!!!");
         setIsLoading(false);

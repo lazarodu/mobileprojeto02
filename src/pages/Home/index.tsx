@@ -54,7 +54,7 @@ export default function Home({ navigation }: AnimalTypes) {
         setIsLoading(false);
       }
     };
-    fetchData();
+    navigation.addListener("focus", () => fetchData());
   }, []);
 
   return (
